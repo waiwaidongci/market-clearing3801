@@ -1,5 +1,5 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, PositiveInt
 from src.constants.enums import Review
 
 class Request(BaseModel):
@@ -28,3 +28,9 @@ class ScheduleRequest(RunRequest):
     recipient: str = Field(min_length=1, max_length=100)
     first_at: datetime
     repeat_daily: bool = False
+
+class IssueRequest(Request):
+    posting_date: str = Field(min_length=10, max_length=10)
+
+class ReceiptRequest(Request):
+    line_ids: list[PositiveInt] = Field(min_length=1, max_length=500)
